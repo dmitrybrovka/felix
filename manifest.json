@@ -10,6 +10,14 @@
     }
   },
 
+  "browser_action": {
+    "default_icon": {
+      "16": "assets/images/st.svg",
+      "24": "assets/images/st.svg",
+      "32": "assets/images/st.svg"
+    }
+  },
+
   "web_accessible_resources": [
     "images/*.svg"
   ],
