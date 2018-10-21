@@ -1,0 +1,40 @@
+{
+  "manifest_version": 2,
+  "name": "Startrek Plugin",
+  "version": "1.0",
+
+  "page_action": {
+    "default_icon": "assets/images/st.svg"
+  },
+
+  "web_accessible_resources": [
+    "images/*.svg"
+  ],
+
+  "applications": {
+    "gecko": {
+      "id": "stplugin@mozilla.org",
+      "strict_min_version": "45.0"
+    }
+  },
+
+  "permissions": [
+    "activeTab"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_end",
+      "css": ["src/contentStyles.css"],
+      "js": ["src/contentScript.js"]
+    }
+  ],
+
+  "icons": {
+    "16": "assets/images/st.svg",
+    "48": "assets/images/st.svg",
+    "96": "assets/images/st.svg",
+    "128": "assets/images/st.svg"
+  }
+}
