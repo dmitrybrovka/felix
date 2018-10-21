@@ -1,6 +1,6 @@
 const
 	r = /EDADEAL\w+-\d+/,
-	icon = chrome.runtime.getURL('images/st.svg');
+	icon = chrome.runtime.getURL('assets/images/st.svg');
 
 function updateLinks(links) {
 	links.forEach((el) => {
