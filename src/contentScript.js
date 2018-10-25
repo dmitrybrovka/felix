@@ -2,7 +2,7 @@ const
 	r = /EDADEAL\w+-\d+/,
 	icon = chrome.runtime.getURL('assets/images/st.svg');
 
-function updateLinks(links) {
+function update(links) {
 	links.forEach((el) => {
 		const
 			prev = el.previousElementSibling;
@@ -27,13 +27,18 @@ function updateLinks(links) {
 	});
 }
 
-let linksLength = document.links.length;
+function debounce(fn, ms) {
+	let t;
 
-setInterval(() => {
-	const
-		links = Array.from(document.links);
-
-	if (links.length !== linksLength) {
-		updateLinks(links);
+	return (...args) => {
+		clearTimeout(t);
+		t = setTimeout(() => fn(...args), ms);
 	}
-}, 5000);
+}
+
+const
+	observer = new MutationObserver(debounce(() => update(Array.from(document.links)), 500)),
+	config = {childList: true, subtree: true};
+
+update(Array.from(document.links));
+observer.observe(document.body, config);

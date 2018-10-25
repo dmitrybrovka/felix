@@ -3,20 +3,21 @@
   "name": "Felix Plugin",
   "version": "0.1.0",
 
-  "page_action": {
+  "browser_action": {
     "default_icon": {
-      "16": "assets/images/st.svg",
-      "32": "assets/images/st.svg"
+      "16": "assets/images/felix@16.png",
+      "24": "assets/images/felix@48.png",
+      "32": "assets/images/felix@32.png"
     }
   },
 
   "web_accessible_resources": [
-    "images/*.svg"
+    "assets/images/*.svg"
   ],
 
   "applications": {
     "gecko": {
-      "id": "stplugin@mozilla.org",
+      "id": "felix@mozilla.org",
       "strict_min_version": "45.0"
     }
   },
@@ -35,9 +36,9 @@
   ],
 
   "icons": {
-    "16": "assets/images/st.svg",
-    "48": "assets/images/st.svg",
-    "96": "assets/images/st.svg",
-    "128": "assets/images/st.svg"
+    "16": "assets/images/felix@16.png",
+    "48": "assets/images/felix@48.png",
+    "96": "assets/images/felix@128.png",
+    "128": "assets/images/felix@128.png"
   }
 }
