@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Felix Plugin",
+  "name": "Felix",
   "version": "0.2.0",
 
   "browser_action": {
