@@ -1,5 +1,5 @@
 const
-	r = /EDADEAL\w+-\d+/,
+	r = /EDADEAL\w+-\d+/g,
 	icon = chrome.runtime.getURL('assets/images/st.svg');
 
 function update(links) {
@@ -12,16 +12,19 @@ function update(links) {
 				match = el.textContent.match(r);
 
 			if (match && !el.href.match(/st\.yandex-team\.ru/)) {
-				const
-					l = document.createElement('a');
+				match.forEach((m) => {
+					const
+						l = document.createElement('a');
 
-				l.href = `https://st.yandex-team.ru/${match[0]}`;
-				l.target = '_blank';
-				l.className = 'stLink';
+					l.href = `https://st.yandex-team.ru/${m}`;
+					l.target = '_blank';
+					l.className = 'stLink';
 
-				l.style.backgroundImage = `url("${icon}")`;
+					l.style.backgroundImage = `url("${icon}")`;
+					l.title = m;
 
-				el.insertAdjacentElement('beforebegin', l);
+					el.insertAdjacentElement('beforebegin', l);
+				});
 			}
 		}
 	});
