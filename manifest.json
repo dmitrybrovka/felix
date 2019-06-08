@@ -23,8 +23,11 @@
   },
 
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
+
+  "options_page": "src/options.html",
 
   "content_scripts": [
     {

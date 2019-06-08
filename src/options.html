@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Felix | Options</title>
+		<link rel="stylesheet" href="options.css">
+	</head>
+	<body class="options">
+		<form id="optionsForm" class="options__form">
+			<h1 class="options__title">Felix settings</h1>
+
+			<fieldset class="options__row">
+				<label for="apiField" class="options__label">API URL:</label>
+				<input id="apiField" class="options__field" type="text" required>
+			</fieldset>
+
+			<fieldset class="options__row">
+				<label for="urlField" class="options__label">Task tracker url (= API URL by default):</label>
+				<input id="urlField" class="options__field" type="text">
+			</fieldset>
+
+			<fieldset class="options__row">
+				<label for="tokenField" class="options__label">Access Token:</label>
+				<textarea id="tokenField" class="options__field options__field_type_area" required></textarea>
+			</fieldset>
+
+			<fieldset class="options__row">
+				<label for="expressionField" class="options__label">Queue search expression:</label>
+				<input id="expressionField" class="options__field options__field" required>
+			</fieldset>
+
+			<button id="saveBtn" type="submit" class="options__save">Save changes</button>
+			<div id="notification" class="options__notification">👌</div>
+		</form>
+	</body>
+	<script src="options.js"></script>
+</html>

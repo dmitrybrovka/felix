@@ -1,0 +1,22 @@
+{
+  "name": "felix",
+  "description": "Felix The Marker",
+  "main": "contentScript.js",
+  "license": "FSFUL",
+  "version": "1.0",
+  "private": true,
+  "typings": "index.d.ts",
+  "author": {
+    "name": "brovka",
+    "email": "dmitrybrovka@yandex.ru"
+  },
+  "scripts": {
+    "build": "gulp build -w off"
+  },
+  "optionalDependencies": {
+    "gulp": "^4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.6.1"
+  }
+}
