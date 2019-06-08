@@ -12,10 +12,12 @@
 .options__field {
 	width: 100%;
 	padding: 12px;
-	box-sizing: border-box;
-	font-size: 16px;
+
 	border-radius: 4px;
 	border: 1px solid #CBCBCB;
+
+	box-sizing: border-box;
+	font-size: 16px;
 }
 
 .options__field:focus {
@@ -45,11 +47,14 @@
 .options__save {
 	padding: 8px 12px;
 	margin-top: 12px;
+
 	border-radius: 4px;
-	font-size: 16px;
-	background-color: #1766F1;
 	border: 1px solid #1766F1;
+	font-size: 16px;
+
+	background-color: #1766F1;
 	color: #FFF;
+	cursor: pointer;
 	transition: border-color 0.2s linear, background-color 0.2s linear;
 }
 

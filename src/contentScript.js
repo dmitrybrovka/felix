@@ -1,21 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
-	chrome.storage.sync.get(['api', 'token', 'expression'], (params) => {
-		new Felix(params);
-	});
+'use strict';
+
+chrome.storage.sync.get(['api', 'token', 'expression', 'url'], (params) => {
+	new Felix(params);
 });
 
 class Felix {
-	token;
-	api;
-	expression;
-	trackerUrl;
-	taskIcon;
-
-	observerConfig = {
-		childList: true,
-		subtree: true
-	};
-
 	constructor(params) {
 		this.api = params.api;
 		this.token = params.token;
@@ -23,11 +12,20 @@ class Felix {
 		this.taskIcon = chrome.runtime.getURL('assets/images/st.svg');
 		this.expression = this.createExpression(params.expression);
 
+		this.observerConfig = {
+			childList: true,
+			subtree: true
+		};
+
 		this.startDaemon();
 	}
 
 	createExpression(str, params = 'ig') {
-		return new RegExp(str, params);
+		return new RegExp(`(${str})[-| ]?([0-9]+)`, params);
+	}
+
+	cookTaskName(str) {
+		return str.replace(this.expression, '$1-$2');
 	}
 
 	update(links) {
@@ -39,12 +37,12 @@ class Felix {
 				const
 					match = el.textContent.match(this.expression);
 
-				if (match && !el.href.match(this.trackerUrl)) {
+				if (match && !el.href.includes(this.trackerUrl)) {
 					match.forEach((m) => {
 						const
 							l = document.createElement('a');
 
-						l.href = `${this.trackerUrl}/${m}`;
+						l.href = `${this.trackerUrl}/${this.cookTaskName(m)}`;
 						l.target = '_blank';
 						l.className = 'stLink';
 

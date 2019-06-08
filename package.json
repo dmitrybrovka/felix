@@ -10,13 +10,8 @@
     "name": "brovka",
     "email": "dmitrybrovka@yandex.ru"
   },
-  "scripts": {
-    "build": "gulp build -w off"
-  },
-  "optionalDependencies": {
-    "gulp": "^4.0.0"
-  },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "eslint": "^5.6.1"
   }
 }
