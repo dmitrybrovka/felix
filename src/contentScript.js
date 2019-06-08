@@ -1,7 +1,3 @@
-const
-	r = /EDADEAL\w+-\d+/g,
-	icon = chrome.runtime.getURL('assets/images/st.svg');
-
 document.addEventListener('DOMContentLoaded', () => {
 	chrome.storage.sync.get(['api', 'token', 'expression'], (params) => {
 		new Felix(params);
@@ -13,6 +9,7 @@ class Felix {
 	api;
 	expression;
 	trackerUrl;
+	taskIcon;
 
 	observerConfig = {
 		childList: true,
@@ -23,7 +20,10 @@ class Felix {
 		this.api = params.api;
 		this.token = params.token;
 		this.trackerUrl = params.url;
+		this.taskIcon = chrome.runtime.getURL('assets/images/st.svg');
 		this.expression = this.createExpression(params.expression);
+
+		this.startDaemon();
 	}
 
 	createExpression(str, params = 'ig') {
@@ -37,19 +37,18 @@ class Felix {
 
 			if (!prev || prev.className !== 'stLink') {
 				const
-					match = el.textContent.match(r),
-					apiRegexp = new RegExp(api);
+					match = el.textContent.match(this.expression);
 
-				if (match && !el.href.match(apiRegexp)) {
+				if (match && !el.href.match(this.trackerUrl)) {
 					match.forEach((m) => {
 						const
 							l = document.createElement('a');
 
-						l.href = `${api}/${m}`;
+						l.href = `${this.trackerUrl}/${m}`;
 						l.target = '_blank';
 						l.className = 'stLink';
 
-						l.style.backgroundImage = `url("${icon}")`;
+						l.style.backgroundImage = `url("${this.taskIcon}")`;
 						l.title = m;
 
 						el.insertAdjacentElement('beforebegin', l);
@@ -57,10 +56,6 @@ class Felix {
 				}
 			}
 		});
-	}
-
-	init() {
-
 	}
 
 	debounce(fn, ms) {
@@ -72,7 +67,7 @@ class Felix {
 		};
 	}
 
-	daemon() {
+	startDaemon() {
 		const
 			observer = new MutationObserver(this.debounce(() => this.update(Array.from(document.links)), 500));
 
