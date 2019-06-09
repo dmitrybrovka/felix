@@ -10,7 +10,7 @@
 			'urlField'
 		], ({token = '', api = '', expression = '', url = ''}) => {
 			tokenField.value = token;
-			urlField.value = url || api;
+			urlField.value = url;
 			apiField.value = api;
 			expressionField.value = expression;
 		});
@@ -24,7 +24,7 @@
 
 			chrome.storage.sync.set({
 				api: apiField.value,
-				url: urlField.value || apiField.value,
+				url: urlField.value,
 				token: tokenField.value,
 				expression: expressionField.value
 			}, () => {

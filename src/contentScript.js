@@ -18,7 +18,16 @@ class Felix {
 			subtree: true
 		};
 
-		this.createPopOver();
+		this.additionalInfoConfig = {
+			key: true,
+			title: true,
+			summary: true,
+			assignee: 'assignee.display',
+			priority: 'priority.display',
+			status: 'status.display'
+		};
+
+		this.popOver = this.createPopOver(this.additionalInfoConfig);
 		this.startDaemon();
 	}
 
@@ -40,37 +49,37 @@ class Felix {
 	 * @returns {void | string | never}
 	 */
 	cookTaskName(str) {
-		return str.replace(this.expression, '$1-$2');
+		return str.toUpperCase().replace(this.expression, '$1-$2');
 	}
 
 	/**
 	 * Creates popover with additional
 	 * information about marked task
 	 */
-	createPopOver() {
+	createPopOver(config) {
 		const
-			wrapper = document.createElement('div'),
-			title = document.createElement('div'),
-			content = document.createElement('p');
+			popOver = {},
+			wrapper = document.createElement('div');
 
-		content.className = 'st-popover-content';
-		title.className = 'st-popover-title';
-		wrapper.className = 'st-popover';
-		wrapper.id = `uid-${this.id}-pop-over`;
+		for (const key in config) {
+			if (config.hasOwnProperty(key)) {
+				const element = document.createElement('div');
+				element.className = `st-popover-${key}`;
 
-		wrapper.insertAdjacentElement('beforeend', title);
-		wrapper.insertAdjacentElement('beforeend', content);
-
-		this.popOver = {
-			title,
-			content,
-			wrapper,
-			classes: {
-				show: 'st-popover_show_true'
+				wrapper.insertAdjacentElement('beforeend', element);
+				popOver[key] = element;
 			}
-		};
+		}
+
+		wrapper.id = `uid-${this.id}-pop-over`;
+		wrapper.className = 'st-popover';
+
+		popOver.wrapper = wrapper;
+		popOver.classes = {show: 'st-popover_show_true'};
 
 		document.body.insertAdjacentElement('beforeend', wrapper);
+
+		return popOver;
 	}
 
 	/**
@@ -89,22 +98,44 @@ class Felix {
 				if (match && !el.href.includes(this.trackerUrl)) {
 					match.forEach((m) => {
 						const
-							l = document.createElement('a');
+							l = document.createElement('a'),
+							task = this.cookTaskName(m);
 
-						l.href = `${this.trackerUrl}/${this.cookTaskName(m)}`;
+						l.href = `${this.trackerUrl}/${task}`;
 						l.target = '_blank';
 						l.className = 'st-link';
-
 						l.style.backgroundImage = `url("${this.taskIcon}")`;
-						l.title = m;
+						l.title = task;
 
 						el.insertAdjacentElement('beforebegin', l);
 
-						l.addEventListener('mouseover', this.catchMouse.bind(this));
+						l.addEventListener('mouseover', this.debounce(this.catchMouse.bind(this)));
 						l.addEventListener('mouseleave', this.releaseMouse.bind(this));
 					});
 				}
 			}
+		});
+	}
+
+	/**
+	 * Gets task data
+	 *
+	 * @param p
+	 * @returns {Promise<Response>}
+	 */
+	fetchData(p) {
+		if (!p.url) {
+			return;
+		}
+
+		return fetch(p.url, {
+			headers: new Headers({
+				Accept: 'application/json',
+				Authorization: `OAuth ${this.token}`
+			}),
+			cache: 'default',
+			credentials: 'include',
+			method: 'GET'
 		});
 	}
 
@@ -124,12 +155,60 @@ class Felix {
 		const
 			{wrapper, classes: {show}} = this.popOver;
 
+		wrapper.classList.remove(show);
 		wrapper.style.left = `${e.clientX}px`;
 		wrapper.style.top = `${e.clientY}px`;
 
-		if (!wrapper.classList.contains(show)) {
-			wrapper.classList.add(show);
-		}
+		this.getInfo(e.target.title).then((data) => {
+			for (const key in data) {
+				if (data.hasOwnProperty(key)) {
+					if (this.popOver[key]) {
+						this.popOver[key].textContent = data[key];
+					}
+				}
+			}
+
+			if (!wrapper.classList.contains(show)) {
+				wrapper.classList.add(show);
+			}
+		});
+	}
+
+	getInfo(task) {
+		return this.fetchData({
+			url: `${this.api}/v2/issues/${task}`
+		}).then((res) => res.json()).then((res) => {
+			if (res.errorMessages) {
+				return;
+			}
+
+			const
+				config = this.additionalInfoConfig,
+				data = {};
+
+			for (const key in config) {
+				if (config.hasOwnProperty(key)) {
+					if (typeof config[key] === 'string') {
+						const
+							arr = config[key].split('.');
+
+						let
+							value = res;
+
+						for (let i = 0; i < arr.length; i++) {
+							value = value[arr[i]];
+						}
+
+						data[key] = value;
+
+					} else if (config[key] && res[key]) {
+						data[key] = res[key];
+					}
+				}
+			}
+
+			return data;
+		});
 	}
 
 	/**
@@ -139,7 +218,7 @@ class Felix {
 	 * @param ms
 	 * @returns {Function}
 	 */
-	debounce(fn, ms) {
+	debounce(fn, ms = 500) {
 		let t;
 
 		return (...args) => {
@@ -152,7 +231,7 @@ class Felix {
 	 * Runs observer for all page links
 	 */
 	startDaemon() {
-		const observer = new MutationObserver(this.debounce(() => this.update(Array.from(document.links)), 500));
+		const observer = new MutationObserver(this.debounce(() => this.update(Array.from(document.links))));
 		observer.observe(document.body, this.observerConfig);
 	}
 }
