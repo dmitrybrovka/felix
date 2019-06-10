@@ -153,23 +153,25 @@ class Felix {
 		const
 			{wrapper, classes: {show}} = this.popOver;
 
-		wrapper.classList.remove(show);
-		wrapper.style.left = `${e.pageX + 20}px`;
-		wrapper.style.top = `${e.pageY}px`;
+		if (this.api && this.token) {
+			wrapper.classList.remove(show);
+			wrapper.style.left = `${e.pageX + 20}px`;
+			wrapper.style.top = `${e.pageY}px`;
 
-		this.getInfo(e.target.dataset.title).then((data) => {
-			for (const key in data) {
-				if (data.hasOwnProperty(key)) {
-					if (this.popOver[key]) {
-						this.popOver[key].textContent = data[key];
+			this.getInfo(e.target.dataset.title).then((data) => {
+				for (const key in data) {
+					if (data.hasOwnProperty(key)) {
+						if (this.popOver[key]) {
+							this.popOver[key].textContent = data[key];
+						}
 					}
 				}
-			}
 
-			if (!wrapper.classList.contains(show)) {
-				wrapper.classList.add(show);
-			}
-		});
+				if (!wrapper.classList.contains(show)) {
+					wrapper.classList.add(show);
+				}
+			});
+		}
 	}
 
 	getInfo(task) {

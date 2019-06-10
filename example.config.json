@@ -1,0 +1,6 @@
+{
+  "api_url": "https://www.example-api.io",
+  "token": "TOKEN STRING",
+  "tracker_url": "https://tracker.example.io",
+  "queue": "myawesomequeue[a-z]*"
+}
