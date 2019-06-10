@@ -1,8 +1,8 @@
 addon:
   stage: deploy
   script:
-    - mkdir addon
-    - cp -r {src,assets,manifest.json} addon
+    - mkdir felix
+    - cp -r {src,assets,manifest.json} ./
   artifacts:
     paths:
       - addon
