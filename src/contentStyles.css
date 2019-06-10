@@ -5,6 +5,8 @@
 
 	background-repeat: no-repeat !important;
 	background-size: cover !important;
+	margin-right: 4px !important;
+	padding: 0 !important;
 }
 
 .st-popover {
@@ -12,22 +14,27 @@
 	z-index: 9999;
 
 	display: none;
-	padding: 4px;
+	padding: 10px;
 	border-radius: 4px;
 
 	background-color: #FFF;
-	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.19);
+	box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.19);
 }
 
 .st-popover_show_true {
 	display: block;
 }
 
-.st-popover-title {
-	font-size: 18px;
-	font-weight: 500;
-
+.st-popover-key {
+	font-size: 15px;
+	font-weight: 600;
 	color: #303134;
+}
+
+.st-popover-priority,
+.st-popover-assignee,
+.st-popover-status {
+	font-size: 10px;
 }
 
 .st-popover-content {

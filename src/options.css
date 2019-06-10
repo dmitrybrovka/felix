@@ -1,12 +1,14 @@
 .options {
-	padding: 12px 0;
+	padding: 0 20px 20px;
 	margin: 0;
+	box-sizing: border-box;
 }
 
 .options__label {
 	display: block;
 	margin-bottom: 8px;
-	font: 18px 'Open Sans', Arial, sans-serif;
+	font: 14px 'Open Sans', Arial, sans-serif;
+	color: #9B9B9B;
 }
 
 .options__field {
@@ -40,7 +42,9 @@
 }
 
 .options__form {
-	width: 700px;
+	width: 100%;
+	min-width: 400px;
+	max-width: 700px;
 	margin: 0 auto;
 }
 

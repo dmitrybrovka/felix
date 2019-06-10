@@ -20,7 +20,6 @@ class Felix {
 
 		this.additionalInfoConfig = {
 			key: true,
-			title: true,
 			summary: true,
 			assignee: 'assignee.display',
 			priority: 'priority.display',
@@ -105,7 +104,7 @@ class Felix {
 						l.target = '_blank';
 						l.className = 'st-link';
 						l.style.backgroundImage = `url("${this.taskIcon}")`;
-						l.title = task;
+						l.dataset.title = task;
 
 						el.insertAdjacentElement('beforebegin', l);
 
@@ -156,10 +155,10 @@ class Felix {
 			{wrapper, classes: {show}} = this.popOver;
 
 		wrapper.classList.remove(show);
-		wrapper.style.left = `${e.clientX}px`;
-		wrapper.style.top = `${e.clientY}px`;
+		wrapper.style.left = `${e.pageX + 20}px`;
+		wrapper.style.top = `${e.pageY}px`;
 
-		this.getInfo(e.target.title).then((data) => {
+		this.getInfo(e.target.dataset.title).then((data) => {
 			for (const key in data) {
 				if (data.hasOwnProperty(key)) {
 					if (this.popOver[key]) {

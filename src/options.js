@@ -7,7 +7,7 @@
 			'api',
 			'token',
 			'expression',
-			'urlField'
+			'url'
 		], ({token = '', api = '', expression = '', url = ''}) => {
 			tokenField.value = token;
 			urlField.value = url;
