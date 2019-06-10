@@ -3,6 +3,8 @@ addon:
   script:
     - mkdir felix
   artifacts:
+    name: "felix"
+
     paths:
       - src
       - assets
