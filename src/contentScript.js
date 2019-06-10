@@ -132,7 +132,6 @@ class Felix {
 				Accept: 'application/json',
 				Authorization: `OAuth ${this.token}`
 			}),
-			cache: 'default',
 			credentials: 'include',
 			method: 'GET'
 		});

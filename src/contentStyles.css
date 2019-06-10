@@ -2,11 +2,11 @@
 	display: inline-block !important;
 	width: 10px !important;
 	height: 10px !important;
+	margin-right: 4px !important;
+	padding: 0 !important;
 
 	background-repeat: no-repeat !important;
 	background-size: cover !important;
-	margin-right: 4px !important;
-	padding: 0 !important;
 }
 
 .st-popover {
