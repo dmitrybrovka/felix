@@ -31,6 +31,10 @@
     "page": "src/options.html"
   },
 
+  "background": {
+    "scripts": ["src/background.js"]
+  },
+
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

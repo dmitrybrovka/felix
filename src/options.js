@@ -46,7 +46,7 @@
 					}
 				}
 
-				chrome.storage.sync.set(obj, location.reload);
+				chrome.storage.sync.set(obj, () => location.reload());
 
 			} catch {
 				throw new Error('Error while parsing a json file');
