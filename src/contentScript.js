@@ -242,6 +242,7 @@ class Felix {
 
 	/**
 	 * Handles errors
+	 * @param err
 	 */
 	catchError(err) {
 		const
