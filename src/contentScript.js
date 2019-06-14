@@ -108,7 +108,7 @@ class Felix {
 
 						el.insertAdjacentElement('beforebegin', l);
 
-						l.addEventListener('mouseover', this.debounce(this.catchMouse.bind(this)));
+						l.addEventListener('mouseenter', this.catchMouse.bind(this));
 						l.addEventListener('mouseleave', this.releaseMouse.bind(this));
 					});
 				}

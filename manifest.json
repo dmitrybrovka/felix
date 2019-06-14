@@ -24,7 +24,9 @@
 
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "webRequest",
+    "<all_urls>"
   ],
 
   "options_ui": {
