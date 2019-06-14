@@ -28,6 +28,10 @@ class Felix {
 
 		this.popOver = this.createPopOver(this.additionalInfoConfig);
 		this.startDaemon();
+
+		if (!this.trackerUrl) {
+			this.catchError('You didn\'t show me where to go to tasks.\nClick on me on the top bar and fill required fields');
+		}
 	}
 
 	/**
@@ -175,40 +179,41 @@ class Felix {
 	}
 
 	getInfo(task) {
-		return this.fetchData({
-			url: `${this.api}/v2/issues/${task}`
-		}).then((res) => res.json()).then((res) => {
-			if (res.errorMessages) {
-				return;
-			}
+		return this.fetchData({url: `${this.api}/v2/issues/${task}`})
+			.then((res) => res.json())
+			.then((res) => {
+				if (res.errorMessages) {
+					return;
+				}
 
-			const
-				config = this.additionalInfoConfig,
-				data = {};
+				const
+					config = this.additionalInfoConfig,
+					data = {};
 
-			for (const key in config) {
-				if (config.hasOwnProperty(key)) {
-					if (typeof config[key] === 'string') {
-						const
-							arr = config[key].split('.');
+				for (const key in config) {
+					if (config.hasOwnProperty(key)) {
+						if (typeof config[key] === 'string') {
+							const
+								arr = config[key].split('.');
 
-						let
-							value = res;
+							let
+								value = res;
 
-						for (let i = 0; i < arr.length; i++) {
-							value = value[arr[i]];
+							for (let i = 0; i < arr.length; i++) {
+								value = value[arr[i]];
+							}
+
+							data[key] = value;
+
+						} else if (config[key] && res[key]) {
+							data[key] = res[key];
 						}
-
-						data[key] = value;
-
-					} else if (config[key] && res[key]) {
-						data[key] = res[key];
 					}
 				}
-			}
 
-			return data;
-		});
+				return data;
+			})
+			.catch(this.catchError);
 	}
 
 	/**
@@ -233,5 +238,33 @@ class Felix {
 	startDaemon() {
 		const observer = new MutationObserver(this.debounce(() => this.update(Array.from(document.links))));
 		observer.observe(document.body, this.observerConfig);
+	}
+
+	/**
+	 * Handles errors
+	 */
+	catchError(err) {
+		const
+			disclaimer = 'FELIX THE MARKER';
+
+		let str;
+
+		if (typeof err === 'object') {
+			try {
+				str = JSON.stringify(err);
+
+			} catch (e) {
+				console.warn(`
+					${disclaimer}:\n
+					🙀\n
+					${e}
+				`);
+			}
+
+		} else {
+			str = err;
+		}
+
+		console.warn(`${disclaimer}\n😿 ${str}`);
 	}
 }
