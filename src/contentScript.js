@@ -136,6 +136,7 @@ class Felix {
 				Accept: 'application/json',
 				Authorization: `OAuth ${this.token}`
 			}),
+
 			credentials: 'include',
 			method: 'GET'
 		});
@@ -159,10 +160,15 @@ class Felix {
 
 		if (this.api && this.token) {
 			wrapper.classList.remove(show);
-			wrapper.style.left = `${e.pageX + 20}px`;
-			wrapper.style.top = `${e.pageY}px`;
 
 			this.getInfo(e.target.dataset.title).then((data) => {
+				if (!data) {
+					return;
+				}
+
+				wrapper.style.left = `${e.pageX + 20}px`;
+				wrapper.style.top = `${e.pageY}px`;
+
 				for (const key in data) {
 					if (data.hasOwnProperty(key)) {
 						if (this.popOver[key]) {
@@ -178,12 +184,18 @@ class Felix {
 		}
 	}
 
+	/**
+	 * Returns data by task key
+	 *
+	 * @param task
+	 * @returns {Promise<any | never>}
+	 */
 	getInfo(task) {
 		return this.fetchData({url: `${this.api}/v2/issues/${task}`})
 			.then((res) => res.json())
 			.then((res) => {
 				if (res.errorMessages) {
-					return;
+					throw new Error(res.errorMessages);
 				}
 
 				const
@@ -250,16 +262,12 @@ class Felix {
 
 		let str;
 
-		if (typeof err === 'object') {
+		if (typeof err === 'object' && !(err instanceof Error)) {
 			try {
 				str = JSON.stringify(err);
 
 			} catch (e) {
-				console.warn(`
-					${disclaimer}:\n
-					🙀\n
-					${e}
-				`);
+				console.warn(`${disclaimer}:\n🙀 ${e}`);
 			}
 
 		} else {
