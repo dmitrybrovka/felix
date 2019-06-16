@@ -36,7 +36,6 @@
 
 		reader.readAsText(fileUploader.files[0]);
 		reader.addEventListener('load', () => {
-
 			try {
 				config = JSON.parse(reader.result);
 

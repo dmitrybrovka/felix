@@ -58,6 +58,8 @@ class Felix {
 	/**
 	 * Creates popover with additional
 	 * information about marked task
+	 *
+	 * @param config
 	 */
 	createPopOver(config) {
 		const
