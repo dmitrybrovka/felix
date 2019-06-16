@@ -1,7 +1,48 @@
-.stLink {
-	display: inline-block;
-	width: 10px;
-	height: 10px;
-	background-repeat: no-repeat;
-	background-size: cover;
+.st-link {
+	display: inline-block !important;
+	width: 10px !important;
+	height: 10px !important;
+	margin-right: 4px !important;
+	padding: 0 !important;
+
+	background-repeat: no-repeat !important;
+	background-size: cover !important;
+}
+
+.st-popover {
+	position: absolute;
+	z-index: 9999;
+
+	display: none;
+	padding: 10px;
+	border-radius: 4px;
+
+	background-color: #FFF;
+	box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.19);
+}
+
+.st-popover_show_true {
+	display: block;
+}
+
+.st-popover-key {
+	font-size: 15px;
+	font-weight: 600;
+	color: #303134;
+}
+
+.st-popover-priority,
+.st-popover-assignee,
+.st-popover-status {
+	font-size: 10px;
+}
+
+.st-popover-content {
+	margin-top: 10px !important;
+
+	font-size: 14px !important;
+	font-weight: 300 !important;
+	line-height: 1.2 !important;
+
+	color: #424346 !important;
 }

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Felix",
-  "version": "0.2.1",
+  "version": "1.0",
 
   "browser_action": {
     "default_icon": {
@@ -23,8 +23,19 @@
   },
 
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage",
+    "webRequest",
+    "<all_urls>"
   ],
+
+  "options_ui": {
+    "page": "src/options.html"
+  },
+
+  "background": {
+    "scripts": ["src/background.js"]
+  },
 
   "content_scripts": [
     {
