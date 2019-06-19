@@ -15,13 +15,6 @@
     "assets/images/*.svg"
   ],
 
-  "applications": {
-    "gecko": {
-      "id": "felix@mozilla.org",
-      "strict_min_version": "45.0"
-    }
-  },
-
   "permissions": [
     "activeTab",
     "storage",
