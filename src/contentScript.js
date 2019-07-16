@@ -101,7 +101,10 @@ class Felix {
 					match = el.textContent.match(this.expression);
 
 				if (match && !el.href.includes(this.trackerUrl)) {
-					match.forEach((m) => {
+					const
+						mSet = new Set(match);
+
+					mSet.forEach((m) => {
 						const
 							l = document.createElement('a'),
 							task = this.cookTaskName(m);
@@ -115,7 +118,7 @@ class Felix {
 						el.insertAdjacentElement('beforebegin', l);
 
 						l.addEventListener('mouseenter', this.catchMouse.bind(this));
-						l.addEventListener('mouseleave', this.releaseMouse.bind(this));
+						l.addEventListener('mouseout', this.releaseMouse.bind(this));
 					});
 				}
 			}
@@ -126,7 +129,7 @@ class Felix {
 	 * Gets task data
 	 *
 	 * @param p
-	 * @returns {Promise<Response>}
+	 * @returns {Promise<Response> | void}
 	 */
 	fetchData(p) {
 		if (!p.url) {
