@@ -12,6 +12,7 @@ class Felix {
 		this.taskIcon = chrome.runtime.getURL('assets/images/st.svg');
 		this.expression = this.createExpression(params.expression);
 		this.id = chrome.runtime.id;
+		this.defaultLinkClass = 'st-link';
 
 		this.observerConfig = {
 			childList: true,
@@ -92,15 +93,17 @@ class Felix {
 	 * @param links
 	 */
 	update(links) {
+		const dlc = this.defaultLinkClass;
+
 		links.forEach((link) => {
-			if (link.classList.contains('st-link-here')) {
+			if (link.classList.contains(`${dlc}-here`)) {
 				return;
 			}
 
 			const
 				prev = link.previousElementSibling;
 
-			if (!prev || prev.className !== 'st-link') {
+			if (!prev || prev.className !== dlc) {
 				const
 					match = link.textContent.match(this.expression);
 
@@ -115,7 +118,7 @@ class Felix {
 
 						l.href = `${this.trackerUrl}/${task}`;
 						l.target = '_blank';
-						l.className = 'st-link';
+						l.className = dlc;
 						l.style.backgroundImage = `url("${this.taskIcon}")`;
 						l.dataset.title = task;
 
@@ -127,24 +130,22 @@ class Felix {
 								n = walk.nextNode();
 
 							while (n) {
-								if (n.className === 'st-link') {
+								if (n.className === dlc) {
 									break;
 								}
 
 								if (n.textContent && this.expression.test(n.textContent)) {
 									n.parentElement.insertAdjacentElement('beforebegin', l);
-									link.classList.add('st-link-here');
+									link.classList.add(`${dlc}-here`);
 									break;
-
-								} else {
-									n = walk.nextNode();
 								}
+
+								n = walk.nextNode();
 							}
 
 						} else {
 							el.insertAdjacentElement('beforebegin', l);
 						}
-
 
 						l.addEventListener('mouseenter', this.catchMouse.bind(this));
 						l.addEventListener('mouseout', this.releaseMouse.bind(this));
