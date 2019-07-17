@@ -92,15 +92,19 @@ class Felix {
 	 * @param links
 	 */
 	update(links) {
-		links.forEach((el) => {
+		links.forEach((link) => {
+			if (link.classList.contains('st-link-here')) {
+				return;
+			}
+
 			const
-				prev = el.previousElementSibling;
+				prev = link.previousElementSibling;
 
 			if (!prev || prev.className !== 'st-link') {
 				const
-					match = el.textContent.match(this.expression);
+					match = link.textContent.match(this.expression);
 
-				if (match && !el.href.includes(this.trackerUrl)) {
+				if (match && !link.href.includes(this.trackerUrl)) {
 					const
 						mSet = new Set(match);
 
@@ -115,7 +119,32 @@ class Felix {
 						l.style.backgroundImage = `url("${this.taskIcon}")`;
 						l.dataset.title = task;
 
-						el.insertAdjacentElement('beforebegin', l);
+						if (link.children) {
+							const
+								walk = document.createTreeWalker(link, NodeFilter.SHOW_TEXT, null, false);
+
+							let
+								n = walk.nextNode();
+
+							while (n) {
+								if (n.className === 'st-link') {
+									break;
+								}
+
+								if (n.textContent && this.expression.test(n.textContent)) {
+									n.parentElement.insertAdjacentElement('beforebegin', l);
+									link.classList.add('st-link-here');
+									break;
+
+								} else {
+									n = walk.nextNode();
+								}
+							}
+
+						} else {
+							el.insertAdjacentElement('beforebegin', l);
+						}
+
 
 						l.addEventListener('mouseenter', this.catchMouse.bind(this));
 						l.addEventListener('mouseout', this.releaseMouse.bind(this));
