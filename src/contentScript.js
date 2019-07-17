@@ -12,6 +12,7 @@ class Felix {
 		this.taskIcon = chrome.runtime.getURL('assets/images/st.svg');
 		this.expression = this.createExpression(params.expression);
 		this.id = chrome.runtime.id;
+		this.defaultLinkClass = 'st-link';
 
 		this.observerConfig = {
 			childList: true,
@@ -92,30 +93,63 @@ class Felix {
 	 * @param links
 	 */
 	update(links) {
-		links.forEach((el) => {
+		const dlc = this.defaultLinkClass;
+
+		links.forEach((link) => {
+			if (link.classList.contains(`${dlc}-here`)) {
+				return;
+			}
+
 			const
-				prev = el.previousElementSibling;
+				prev = link.previousElementSibling;
 
-			if (!prev || prev.className !== 'st-link') {
+			if (!prev || prev.className !== dlc) {
 				const
-					match = el.textContent.match(this.expression);
+					match = link.textContent.match(this.expression);
 
-				if (match && !el.href.includes(this.trackerUrl)) {
-					match.forEach((m) => {
+				if (match && !link.href.includes(this.trackerUrl)) {
+					const
+						mSet = new Set(match);
+
+					mSet.forEach((m) => {
 						const
 							l = document.createElement('a'),
 							task = this.cookTaskName(m);
 
 						l.href = `${this.trackerUrl}/${task}`;
 						l.target = '_blank';
-						l.className = 'st-link';
+						l.className = dlc;
 						l.style.backgroundImage = `url("${this.taskIcon}")`;
 						l.dataset.title = task;
 
-						el.insertAdjacentElement('beforebegin', l);
+						if (link.children && link.children.length) {
+							const
+								walk = document.createTreeWalker(link, NodeFilter.SHOW_TEXT, null, false);
+
+							let
+								n = walk.nextNode();
+
+							while (n) {
+								if (n.className === dlc) {
+									break;
+								}
+
+								if (n.textContent && this.expression.test(n.textContent)) {
+									n.parentElement.insertAdjacentElement('afterbegin', l);
+									link.classList.add(`${dlc}-here`);
+									break;
+								}
+
+								n = walk.nextNode();
+							}
+
+						} else {
+							link.classList.add(`${dlc}-here`);
+							link.insertAdjacentElement('afterbegin', l);
+						}
 
 						l.addEventListener('mouseenter', this.catchMouse.bind(this));
-						l.addEventListener('mouseleave', this.releaseMouse.bind(this));
+						l.addEventListener('mouseout', this.releaseMouse.bind(this));
 					});
 				}
 			}
@@ -126,7 +160,7 @@ class Felix {
 	 * Gets task data
 	 *
 	 * @param p
-	 * @returns {Promise<Response>}
+	 * @returns {Promise<Response> | void}
 	 */
 	fetchData(p) {
 		if (!p.url) {
@@ -168,7 +202,7 @@ class Felix {
 					return;
 				}
 
-				wrapper.style.left = `${e.pageX + 20}px`;
+				wrapper.style.left = `${e.pageX + 10}px`;
 				wrapper.style.top = `${e.pageY}px`;
 
 				for (const key in data) {

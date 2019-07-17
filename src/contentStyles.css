@@ -1,7 +1,15 @@
 .st-link {
 	display: inline-block !important;
+	flex: unset !important;
+
 	width: 10px !important;
+	min-width: 10px !important;
+	max-width: 10px !important;
+
 	height: 10px !important;
+	min-height: 10px !important;
+	max-height: 10px !important;
+
 	margin-right: 4px !important;
 	padding: 0 !important;
 
