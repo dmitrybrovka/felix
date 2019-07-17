@@ -122,7 +122,7 @@ class Felix {
 						l.style.backgroundImage = `url("${this.taskIcon}")`;
 						l.dataset.title = task;
 
-						if (link.children) {
+						if (link.children && link.children.length) {
 							const
 								walk = document.createTreeWalker(link, NodeFilter.SHOW_TEXT, null, false);
 
@@ -135,7 +135,7 @@ class Felix {
 								}
 
 								if (n.textContent && this.expression.test(n.textContent)) {
-									n.parentElement.insertAdjacentElement('beforebegin', l);
+									n.parentElement.insertAdjacentElement('afterbegin', l);
 									link.classList.add(`${dlc}-here`);
 									break;
 								}
@@ -144,7 +144,8 @@ class Felix {
 							}
 
 						} else {
-							el.insertAdjacentElement('beforebegin', l);
+							link.classList.add(`${dlc}-here`);
+							link.insertAdjacentElement('afterbegin', l);
 						}
 
 						l.addEventListener('mouseenter', this.catchMouse.bind(this));
@@ -201,7 +202,7 @@ class Felix {
 					return;
 				}
 
-				wrapper.style.left = `${e.pageX + 20}px`;
+				wrapper.style.left = `${e.pageX + 10}px`;
 				wrapper.style.top = `${e.pageY}px`;
 
 				for (const key in data) {
