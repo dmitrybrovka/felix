@@ -6,31 +6,46 @@
 		<link rel="stylesheet" href="options.css">
 	</head>
 	<body class="options">
-		<form id="optionsForm" class="options__form">
-			<section class="options__form-title">
-				<h1 class="options__title">Settings</h1>
-				<label class="options__file-upload-link" for="fileUploader">I have a JSON config</label>
-				<input id="fileUploader" type="file" accept="application/json" class="options__file-uploader" hidden>
-			</section>
+		<section class="options__form-title">
+			<h1 class="options__title">Settings</h1>
+			<nav class="options__control-nav">
+				<button id="pasteButton" type="button" class="options__paste-button" title="Paste config">
+					<svg class="options__paste" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" x="0px" y="0px">
+						<path d="M19.5,6.5H8.5V5A1.5,1.5,0,0,1,10,3.5h2a.5.5,0,0,0,.5-.5,1.5,1.5,0,0,1,3,0,.5.5,0,0,0,.5.5h2A1.5,1.5,0,0,1,19.5,5Z"></path>
+						<path d="M23.5,7v7.5H18A2.5,2.5,0,0,0,15.5,17V28.5H6A1.5,1.5,0,0,1,4.5,27V7A1.5,1.5,0,0,1,6,5.5H7.5V7a.5.5,0,0,0,.5.5H20a.5.5,0,0,0,.5-.5V5.5H22A1.5,1.5,0,0,1,23.5,7Z"></path>
+						<path d="M26,15.5H18A1.5,1.5,0,0,0,16.5,17V29A1.5,1.5,0,0,0,18,30.5h8A1.5,1.5,0,0,0,27.5,29V17A1.5,1.5,0,0,0,26,15.5Zm-4,12H19a.5.5,0,0,1,0-1h3a.5.5,0,0,1,0,1Zm2-4H19a.5.5,0,0,1,0-1h5a.5.5,0,0,1,0,1Zm0-4H19a.5.5,0,0,1,0-1h5a.5.5,0,0,1,0,1Z"></path>
+					</svg>
+				</button>
 
+				<label id="clearFormButton" for="resetForm" class="options__clear-button" title="Clear form">
+					<svg class="options__clear" xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 0 24 24" x="0px" y="0px">
+						<path d="M5,6 L5.73274082,20.8571429 C5.73274082,20.8571429 5.99625939,22 6.98958614,22 L11.598019,22 L12.4359159,22 L17.0443487,22 C18.0380944,22 18.301613,20.8571429 18.301613,20.8571429 L19,6 L5,6 Z M15.5,8 L15.5,8 L15.5,8 C15.2205531,8 14.9908183,8.22036187 14.9791847,8.49956654 L14.5208153,19.5004335 L14.5208153,19.5004335 C14.5097883,19.7650799 14.7153876,19.9885573 14.980034,19.9995842 C14.9866857,19.9998614 14.9933425,20 15,20 L15,20 L15,20 C15.2794469,20 15.5091817,19.7796381 15.5208153,19.5004335 L15.9791847,8.49956654 L15.9791847,8.49956654 C15.9902117,8.23492012 15.7846124,8.01144271 15.519966,8.00041578 C15.5133143,8.00013862 15.5066575,8 15.5,8 Z M9.47918818,19.5003499 L9.02097843,8.49965006 L9.02097843,8.49965006 C9.00934688,8.22039979 8.77957571,8 8.50008331,8 L8.50008331,8 L8.50008331,8 C8.23515945,8 8.02039624,8.21476322 8.02039624,8.47968707 C8.02039624,8.48634356 8.02053479,8.49299933 8.02081182,8.49965006 L8.47902157,19.5003499 L8.47902157,19.5003499 C8.49065312,19.7796002 8.72042429,20 8.99991669,20 L8.99991669,20 L8.99991669,20 C9.26484055,20 9.47960376,19.7852368 9.47960376,19.5203129 C9.47960376,19.5136564 9.47946521,19.5070007 9.47918818,19.5003499 Z M8.00719509,3 L5.11111111,3 L5.11111111,3 C4.49746139,3 4,3.49746139 4,4.11111111 L4,4.11111111 L4,5 L20,5 L20,4.11111111 C20,3.49746139 19.5025386,3 18.8888889,3 L15.9926121,3 C15.9368649,2.4385197 15.4631369,2 14.8869871,2 L9.11301289,2 C8.99358834,2 8.87494478,2.0192532 8.76164871,2.05701856 C8.33332638,2.19979267 8.04982846,2.57814658 8.00719509,3 Z M12,8 C12.2761424,8 12.5,8.22385763 12.5,8.5 L12.5,19.5 C12.5,19.7761424 12.2761424,20 12,20 C11.7238576,20 11.5,19.7761424 11.5,19.5 L11.5,8.5 C11.5,8.22385763 11.7238576,8 12,8 Z"></path>
+					</svg>
+				</label>
+			</nav>
+		</section>
+
+		<textarea id="systemData" style="position: absolute; left: -9999px;"></textarea>
+		<form id="optionsForm" class="options__form">
+			<input type="reset" id="resetForm" style="position: absolute; left: -9999px;">
 			<fieldset class="options__row">
 				<label for="expressionField" class="options__label">Queue name(s) regexp*:</label>
-				<input id="expressionField" class="options__field options__field" required>
+				<input id="expressionField" name="expression" class="options__field options__field" type="text" required>
 			</fieldset>
 
 			<fieldset class="options__row">
 				<label for="urlField" class="options__label">Task tracker url*:</label>
-				<input id="urlField" class="options__field" type="text" required>
+				<input id="urlField" name="url" class="options__field" type="text" required>
 			</fieldset>
 
 			<fieldset class="options__row">
 				<label for="apiField" class="options__label">API URL:</label>
-				<input id="apiField" class="options__field" type="text">
+				<input id="apiField" name="api" class="options__field" type="text">
 			</fieldset>
 
 			<fieldset class="options__row">
 				<label for="tokenField" class="options__label">Access Token:</label>
-				<textarea id="tokenField" class="options__field options__field_type_area"></textarea>
+				<textarea id="tokenField" name="token" class="options__field options__field_type_area"></textarea>
 			</fieldset>
 
 			<button id="saveBtn" type="submit" class="options__save">Save changes</button>

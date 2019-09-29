@@ -5,15 +5,31 @@
 	border-top: 1px solid #E1E1E1;
 }
 
-.options__file-upload-link {
+.options__control-nav {
+	display: flex;
+	align-items: center;
+}
+
+.options__paste-button,
+.options__clear-button {
 	display: block;
-
-	font-size: 14px;
-	text-decoration: underline;
-
+	-webkit-appearance: none;
 	user-select: none;
-	color: #5C91F1;
+	border: none;
+	box-shadow: none;
+	outline: none;
+}
+
+.options__paste,
+.options__clear {
+	fill: #1766F1;
 	cursor: pointer;
+	transition: 0.15s ease-in fill;
+}
+
+.options__paste:hover,
+.options__clear:hover {
+	fill: #0023F1;
 }
 
 .options__label {
@@ -88,6 +104,7 @@
 
 .options__save:focus {
 	border-color: #0023F1;
+	box-shadow: 0 0 3px #1766F1;
 }
 
 .options__title {

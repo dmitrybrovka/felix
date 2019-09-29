@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Felix",
-  "version": "1.0.1",
+  "version": "1.1.0",
 
   "browser_action": {
     "default_icon": {
@@ -19,6 +19,7 @@
     "activeTab",
     "storage",
     "webRequest",
+    "clipboardRead",
     "<all_urls>"
   ],
 

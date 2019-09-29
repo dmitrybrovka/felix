@@ -1,57 +1,37 @@
 (() => {
-	/*eslint-disable */
 	const
-		configFields = {
-			api_url: 'api',
-			tracker_url: 'url',
-			queue: 'expression',
-			token: 'token'
-		};
-	/*eslint-enable */
+		configFields = new Set(['api', 'url', 'expression', 'token']);
 
 	let
 		notificationTimeout;
 
-	document.addEventListener('DOMContentLoaded', () => {
-		chrome.storage.sync.get([
-			'api',
-			'token',
-			'expression',
-			'url'
-		], ({token = '', api = '', expression = '', url = ''}) => {
-			tokenField.value = token;
-			urlField.value = url;
-			apiField.value = api;
-			expressionField.value = expression;
-		});
+	pasteButton.addEventListener('click', (e) => {
+		systemData.focus();
+		document.execCommand('paste');
+
+		const
+			content = systemData.value;
+
+		let config;
+
+		try {
+			config = JSON.parse(content);
+
+		} catch {
+			config = content.split('\n');
+		}
+
+		systemData.value = '';
+		pasteConfig(config);
+		e.preventDefault();
 	});
 
-	fileUploader.addEventListener('change', () => {
-		const
-			reader = new FileReader(),
-			obj = {};
-
-		let
-			config = {};
-
-		reader.readAsText(fileUploader.files[0]);
-		reader.addEventListener('load', () => {
-			try {
-				config = JSON.parse(reader.result);
-
-				for (const k in config) {
-					if (config.hasOwnProperty(k) && configFields[k]) {
-						obj[configFields[k]] = config[k];
-					}
-				}
-
-				chrome.storage.sync.set(obj, () => location.reload());
-
-			} catch {
-				throw new Error('Error while parsing a json file');
-			}
+	document.addEventListener('DOMContentLoaded', () => {
+		chrome.storage.sync.get(Array.from(configFields), (config) => {
+			Object.keys(config).forEach((key) => {
+				window[`${key}Field`].value = config[key];
+			});
 		});
-
 	});
 
 	optionsForm.addEventListener('submit', (e) => {
@@ -79,4 +59,38 @@
 
 		e.preventDefault();
 	});
+
+	function pasteConfig(config) {
+		if (Object.prototype.toString.call(config) === '[object Object]') {
+			for (const k in config) {
+				if (config.hasOwnProperty(k)) {
+					const
+						field = document.querySelector(`#${k}Field`);
+
+					field.value = config[k];
+				}
+			}
+
+		} else if (Array.isArray(config)) {
+			const
+				els = optionsForm.querySelectorAll('[id$="Field"]');
+
+			let j = 0;
+
+			for (let i = 0; i < config.length; i++) {
+				if (!els[j]) {
+					break;
+				}
+
+				const
+					val = config[i].trim();
+
+				if (!val) {
+					continue;
+				}
+
+				els[j++].value = config[i].trim();
+			}
+		}
+	}
 })();
