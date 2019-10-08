@@ -163,18 +163,18 @@ class Felix {
 	 * @returns {Promise<Response> | void}
 	 */
 	fetchData(p) {
-		if (!p.url) {
-			return;
-		}
+		return new Promise((resolve, reject) => {
+			chrome.runtime.sendMessage({
+				query: 'request',
+				...p
+			}, ({err, response}) => {
+				if (err) {
+					reject(err);
+					return;
+				}
 
-		return fetch(p.url, {
-			headers: new Headers({
-				Accept: 'application/json',
-				Authorization: `OAuth ${this.token}`
-			}),
-
-			credentials: 'include',
-			method: 'GET'
+				resolve(response);
+			});
 		});
 	}
 
@@ -228,7 +228,6 @@ class Felix {
 	 */
 	getInfo(task) {
 		return this.fetchData({url: `${this.api}/v2/issues/${task}`})
-			.then((res) => res.json())
 			.then((res) => {
 				if (res.errorMessages) {
 					throw new Error(res.errorMessages);
