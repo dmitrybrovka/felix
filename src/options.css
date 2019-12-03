@@ -14,14 +14,17 @@
 .options__clear-button {
 	display: block;
 	-webkit-appearance: none;
-	user-select: none;
-	border: none;
-	box-shadow: none;
-	outline: none;
+
 	font-size: 16px;
 
-	opacity: 0.75;
+	user-select: none;
 	cursor: pointer;
+
+	border: none;
+	outline: none;
+
+	box-shadow: none;
+	opacity: 0.75;
 }
 
 .options__paste-button:hover,
