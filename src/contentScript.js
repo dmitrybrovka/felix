@@ -13,6 +13,7 @@ class Felix {
 		this.expression = this.createExpression(params.expression);
 		this.id = chrome.runtime.id;
 		this.defaultLinkClass = 'st-link';
+		this.popOverClass = 'st-popover';
 
 		this.observerConfig = {
 			childList: true,
@@ -65,23 +66,37 @@ class Felix {
 	createPopOver(config) {
 		const
 			popOver = {},
-			wrapper = document.createElement('div');
+			baseName = this.popOverClass,
+			wrapper = document.createElement('div'),
+			content = document.createElement('div');
+
+		const
+			elName = (name) => `${baseName}-${name}`;
 
 		for (const key in config) {
 			if (config.hasOwnProperty(key)) {
 				const element = document.createElement('div');
-				element.className = `st-popover-${key}`;
+				element.className = elName(key);
 
-				wrapper.insertAdjacentElement('beforeend', element);
+				content.insertAdjacentElement('beforeend', element);
 				popOver[key] = element;
 			}
 		}
 
+		content.className = elName('content');
+		wrapper.insertAdjacentElement('afterbegin', content);
+
+		const close = document.createElement('div');
+		close.className = elName('close');
+		close.addEventListener('click', this.closePopOver.bind(this));
+
+		wrapper.insertAdjacentElement('afterbegin', close);
+
 		wrapper.id = `uid-${this.id}-pop-over`;
-		wrapper.className = 'st-popover';
+		wrapper.className = baseName;
 
 		popOver.wrapper = wrapper;
-		popOver.classes = {show: 'st-popover_show_true'};
+		popOver.classes = {show: `${baseName}_show_true`};
 
 		document.body.insertAdjacentElement('beforeend', wrapper);
 
@@ -149,7 +164,7 @@ class Felix {
 						}
 
 						l.addEventListener('mouseenter', this.catchMouse.bind(this));
-						l.addEventListener('mouseout', this.releaseMouse.bind(this));
+						l.addEventListener('mouseout', this.closePopOver.bind(this));
 					});
 				}
 			}
@@ -179,9 +194,9 @@ class Felix {
 	}
 
 	/**
-	 * Handler: hides popover
+	 * Hides popover
 	 */
-	releaseMouse() {
+	closePopOver() {
 		const {wrapper, classes: {show}} = this.popOver;
 		wrapper.classList.remove(show);
 	}

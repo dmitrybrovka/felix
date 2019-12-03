@@ -18,18 +18,15 @@
 	border: none;
 	box-shadow: none;
 	outline: none;
-}
+	font-size: 16px;
 
-.options__paste,
-.options__clear {
-	fill: #1766F1;
+	opacity: 0.75;
 	cursor: pointer;
-	transition: 0.15s ease-in fill;
 }
 
-.options__paste:hover,
-.options__clear:hover {
-	fill: #0023F1;
+.options__paste-button:hover,
+.options__clear-button:hover {
+	opacity: 1;
 }
 
 .options__label {
