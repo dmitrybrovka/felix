@@ -83,14 +83,14 @@ class Felix {
 			}
 		}
 
-		content.className = elName('content');
-		wrapper.insertAdjacentElement('afterbegin', content);
-
 		const close = document.createElement('div');
 		close.className = elName('close');
 		close.addEventListener('click', this.closePopOver.bind(this));
 
 		wrapper.insertAdjacentElement('afterbegin', close);
+
+		content.className = elName('content');
+		wrapper.insertAdjacentElement('afterbegin', content);
 
 		wrapper.id = `uid-${this.id}-pop-over`;
 		wrapper.className = baseName;
