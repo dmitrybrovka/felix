@@ -122,7 +122,7 @@ class Felix {
 				const
 					match = link.textContent.match(this.expression);
 
-				if (match && !link.href.includes(this.trackerUrl)) {
+				if (match && !location.href.startsWith(this.trackerUrl)) {
 					const
 						mSet = new Set(match);
 
