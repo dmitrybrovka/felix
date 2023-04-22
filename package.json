@@ -3,7 +3,7 @@
   "description": "Felix The Marker",
   "main": "contentScript.js",
   "license": "FSFUL",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": true,
   "typings": "index.d.ts",
   "author": {
