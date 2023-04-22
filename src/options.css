@@ -2,7 +2,6 @@
 	padding: 16px 20px 20px;
 	margin: 0;
 	box-sizing: border-box;
-	border-top: 1px solid #E1E1E1;
 }
 
 .options__control-nav {
@@ -10,10 +9,15 @@
 	align-items: center;
 }
 
+.options__clear-button {
+	margin-left: 6px;
+}
+
 .options__paste-button,
 .options__clear-button {
 	display: block;
 	-webkit-appearance: none;
+	padding: 6px;
 
 	font-size: 16px;
 
@@ -24,18 +28,20 @@
 	outline: none;
 
 	box-shadow: none;
-	opacity: 0.75;
 }
 
-.options__paste-button:hover,
-.options__clear-button:hover {
-	opacity: 1;
+.options__control-icon:hover {
+	fill: #1766F1;
+}
+
+.options__control-icon {
+	fill: black;
+	transition: fill 0.2s ease-out;
 }
 
 .options__label {
 	display: block;
 	margin-bottom: 8px;
-	font: 14px 'Open Sans', Arial, sans-serif;
 	color: #9B9B9B;
 }
 
@@ -126,6 +132,11 @@
 
 .options__notification_show_true {
 	opacity: 1;
+}
+
+button {
+	background: transparent;
+	padding: 0;
 }
 
 textarea:focus,

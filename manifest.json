@@ -15,7 +15,7 @@
 
   "web_accessible_resources": [
     {
-      "resources": ["assets/images/felix.svg", "assets/images/st.svg", "assets/icons/*.svg"],
+      "resources": ["assets/images/felix.svg", "assets/images/st.svg"],
       "matches": ["<all_urls>"]
     }
   ],
