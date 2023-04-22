@@ -55,7 +55,34 @@
 }
 
 .st-popover-close:before {
-	content: "✖️";
+	content: "×";
+	font-size: 14px;
 	display: block;
 	line-height: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+	.st-popover {
+		background: #1F1E25;
+		color: #D6D6D6;
+		outline: 1px solid #363636;
+	}
+
+	.st-popover-close:before {
+		color: #D6D6D6;
+	}
+
+	.st-popover-key {
+		color: #D6D6D6;
+	}
+}
+
+body.gl-dark .st-popover {
+	background: #1F1E25;
+	outline: 1px solid #363636;
+}
+
+body.gl-dark .st-popover,
+body.gl-dark .st-popover-key {
+	color: #D6D6D6;
 }

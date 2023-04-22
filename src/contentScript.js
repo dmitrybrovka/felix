@@ -179,10 +179,14 @@ class Felix {
 	 */
 	fetchData(p) {
 		return new Promise((resolve, reject) => {
-			chrome.runtime.sendMessage({
-				query: 'request',
-				...p
-			}, ({err, response}) => {
+			const
+				port = chrome.runtime.connect({name: 'felixMainThread'});
+
+			port.onMessage.addListener(({type, err, response}) => {
+				if (type !== 'taskDataResponse') {
+					return;
+				}
+
 				if (err) {
 					reject(err);
 					return;
@@ -190,6 +194,8 @@ class Felix {
 
 				resolve(response);
 			});
+
+			port.postMessage({type: 'taskDataRequest', ...p})
 		});
 	}
 
@@ -262,10 +268,21 @@ class Felix {
 								value = res;
 
 							for (let i = 0; i < arr.length; i++) {
-								value = value[arr[i]];
+								const
+									sub = value[arr[i]];
+
+								if (sub) {
+									value = sub;
+
+								} else {
+									value = undefined;
+									break;
+								}
 							}
 
-							data[key] = value;
+							if (value) {
+								data[key] = value;
+							}
 
 						} else if (config[key] && res[key]) {
 							data[key] = res[key];

@@ -1,27 +1,27 @@
-chrome.browserAction.onClicked.addListener(() => {
-	if (chrome.runtime.openOptionsPage) {
-		chrome.runtime.openOptionsPage();
-	} else {
-		window.open(chrome.runtime.getURL('options.html'));
-	}
-});
+const
+	port = chrome.runtime.connect({name: 'felixMainThread'});
 
-chrome.runtime.onMessage.addListener((data, sender, callback) => {
-	if (data.query === 'request') {
-		if (!data.url) {
-			callback({err: 'URL do not specified'});
-			return false;
+chrome.runtime.onConnect.addListener((port) => {
+	port.onMessage.addListener((data) => {
+		const
+			callback = (data) => port.postMessage({type: 'taskDataResponse', ...data})
+
+		if (data.type === 'taskDataRequest') {
+			if (!data.url) {
+				callback({err: 'URL is not specified'});
+				return false;
+			}
+
+			fetch(data.url)
+				.then((res) => res.json())
+				.then((response) => callback({response}))
+				.catch((err) => callback({err}));
+
+			return true;
 		}
 
-		fetch(data.url)
-			.then((res) => res.json())
-			.then((response) => callback({response}))
-			.catch((err) => callback({err}));
-
-		return true;
-	}
-
-	callback({
-		err: `I don't know this command: ${data.query} at the background runtime message listener`
+		callback({
+			err: `I don't know commands with type: "${data.type}" at the background runtime message listener`
+		});
 	});
 });

@@ -2,7 +2,6 @@
 	padding: 16px 20px 20px;
 	margin: 0;
 	box-sizing: border-box;
-	border-top: 1px solid #E1E1E1;
 }
 
 .options__control-nav {
@@ -10,10 +9,15 @@
 	align-items: center;
 }
 
+.options__clear-button {
+	margin-left: 6px;
+}
+
 .options__paste-button,
 .options__clear-button {
 	display: block;
 	-webkit-appearance: none;
+	padding: 6px;
 
 	font-size: 16px;
 
@@ -24,18 +28,20 @@
 	outline: none;
 
 	box-shadow: none;
-	opacity: 0.75;
 }
 
-.options__paste-button:hover,
-.options__clear-button:hover {
-	opacity: 1;
+.options__control-icon:hover {
+	fill: #1766F1;
+}
+
+.options__control-icon {
+	fill: #1f1e25;
+	transition: fill 0.2s ease-out;
 }
 
 .options__label {
 	display: block;
 	margin-bottom: 8px;
-	font: 14px 'Open Sans', Arial, sans-serif;
 	color: #9B9B9B;
 }
 
@@ -84,6 +90,7 @@
 }
 
 .options__save {
+	flex: 1 1 auto;
 	padding: 8px 12px;
 	margin-top: 12px;
 
@@ -95,6 +102,7 @@
 	color: #FFF;
 	cursor: pointer;
 	transition: border-color 0.2s linear, background-color 0.2s linear;
+	user-select: none;
 }
 
 .options__save:disabled {
@@ -116,9 +124,8 @@
 	vertical-align: middle;
 	display: inline-block;
 
-	font-size: 24px;
+	font-size: 14px;
 	line-height: 1;
-	font-weight: 600;
 
 	opacity: 0;
 	transition: opacity 0.2s linear;
@@ -128,8 +135,73 @@
 	opacity: 1;
 }
 
+.options__disclaimer {
+	display: block;
+	text-align: right;
+	font-size: 8px;
+	margin-top: 16px;
+	color: #9B9B9B;
+}
+
+a.options__disclaimer-link {
+	color: #9B9B9B;
+	text-decoration: underline;
+}
+
+a.options__disclaimer-link:visited {
+	color: #9B9B9B;
+}
+
+.options__footer {
+	display: flex;
+	align-items: center;
+}
+
+button {
+	background: transparent;
+	padding: 0;
+}
+
 textarea:focus,
 input:focus,
 button:focus {
 	outline: none;
+}
+
+@media (prefers-color-scheme: dark) {
+	.options__control-icon {
+		fill: #D6D6D6
+	}
+
+	.options {
+		background: #1f1e25;
+	}
+
+	.options__title {
+		color: #D6D6D6;
+	}
+
+	.options__control-icon:hover {
+		fill: #5789EA;
+	}
+
+	.options__save {
+		background-color: #5789EA;
+		border-color: #5789EA;
+	}
+
+	.options__save:focus {
+		background-color: #507BCE;
+		border-color: #507BCE;
+	}
+
+	.options__field:focus {
+		border-color: #8BAEF1;
+	}
+
+	.options__field {
+		background: #1F1E25;
+		color: #D6D6D6;
+		border: 1px solid #393745;
+	}
 }
