@@ -2,6 +2,7 @@
 	padding: 16px 20px 20px;
 	margin: 0;
 	box-sizing: border-box;
+	user-select: none;
 }
 
 .options__control-nav {
@@ -43,6 +44,7 @@
 	display: block;
 	margin-bottom: 8px;
 	color: #9B9B9B;
+	cursor: pointer;
 }
 
 .options__form-title {
