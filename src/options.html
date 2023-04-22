@@ -7,7 +7,14 @@
 	</head>
 	<body class="options">
 		<section class="options__form-title">
-			<h1 class="options__title">Settings</h1>
+			<h1 class="options__title">Settings
+				<a id="settingsLink" class="options__settings-link" target="_blank" title="Open options in a new tab">
+					<svg class="options__fullscreen-icon" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M13.0263 8.31758C12.7943 8.31758 12.5716 8.40972 12.4075 8.57378C12.2433 8.73799 12.1512 8.96048 12.1513 9.19268V11.8177C12.151 12.0496 12.0588 12.2721 11.8947 12.4361C11.7306 12.6002 11.5083 12.6923 11.2762 12.6926H3.40125C3.16936 12.6923 2.94686 12.6002 2.7828 12.4361C2.61873 12.2721 2.5266 12.0495 2.5263 11.8177V3.94268C2.5266 3.71065 2.61873 3.48829 2.7828 3.32423C2.94686 3.16017 3.16938 3.06788 3.40125 3.06759H6.02625C6.33884 3.06759 6.62771 2.90089 6.78401 2.63019C6.94031 2.35948 6.94031 2.0258 6.78401 1.75509C6.62771 1.48438 6.33885 1.31769 6.02625 1.31769H3.40125C2.70528 1.31842 2.03805 1.59527 1.54601 2.0873C1.05382 2.57949 0.777108 3.24673 0.776245 3.94269V11.8177C0.777124 12.5137 1.05383 13.1809 1.54601 13.6729C2.03805 14.1651 2.70528 14.4418 3.40125 14.4427H11.2762C11.9722 14.4418 12.6394 14.1651 13.1316 13.6729C13.6237 13.1809 13.9005 12.5137 13.9012 11.8177V9.19269C13.9014 8.96051 13.8093 8.738 13.645 8.57379C13.481 8.40973 13.2583 8.31758 13.0263 8.31758Z"/>
+						<path d="M13.9012 0.442657H10.4012C10.0886 0.442657 9.79975 0.609502 9.64345 0.880208C9.48715 1.15091 9.48715 1.48445 9.64345 1.75516C9.79975 2.02587 10.0886 2.19271 10.4012 2.19271H11.7889L6.28236 7.69921C6.11654 7.86298 6.02294 8.08606 6.02221 8.31897C6.02147 8.55203 6.11376 8.77572 6.27855 8.94035C6.4432 9.10514 6.66687 9.19743 6.89993 9.19669C7.13284 9.19596 7.35593 9.10221 7.51969 8.93639L13.0262 3.43026V4.81791C13.0262 5.13051 13.193 5.41938 13.4637 5.57568C13.7344 5.73198 14.068 5.73198 14.3387 5.57568C14.6094 5.41938 14.7762 5.13052 14.7762 4.81791V1.31796C14.7762 1.08579 14.6841 0.863276 14.52 0.699064C14.3558 0.535001 14.1333 0.442864 13.9011 0.442864L13.9012 0.442657Z"/>
+					</svg>
+				</a>
+			</h1>
 			<nav class="options__control-nav">
 				<button id="pasteButton" type="button" class="options__paste-button" title="Paste config">
 					<svg class="options__control-icon" width="17" height="18" viewBox="0 0 17 18" xmlns="http://www.w3.org/2000/svg">
@@ -46,15 +53,15 @@
 				<textarea id="tokenField" name="token" class="options__field options__field_type_area"></textarea>
 			</fieldset>
 
-			<footer class="options__footer">
-				<button id="saveBtn" type="submit" class="options__save">save <span id="notification" class="options__notification">👌</span></button>
-			</footer>
+			<button id="saveBtn" type="submit" class="options__save">save <span id="notification" class="options__notification">👌</span></button>
 		</form>
-		<sup class="options__disclaimer">
-			icons by
-			<a class="options__disclaimer-link" href="https://thenounproject.com/sophiabai/" target="_blank">Sophia</a>
-			from The Noun Project
-		</sup>
+		<footer class="options__footer">
+			<sup class="options__disclaimer">
+				icons by
+				<a class="options__disclaimer-link" href="https://thenounproject.com/sophiabai/" target="_blank">Sophia</a>
+				from The Noun Project
+			</sup>
+		</footer>
 	</body>
 	<script src="options.js"></script>
 </html>
