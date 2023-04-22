@@ -27,6 +27,8 @@
 	});
 
 	document.addEventListener('DOMContentLoaded', () => {
+		settingsLink.href = `chrome-extension://${chrome.runtime.id}/src/options.html`;
+
 		chrome.storage.sync.get(Array.from(configFields), (config) => {
 			Object.keys(config).forEach((key) => {
 				window[`${key}Field`].value = config[key];
