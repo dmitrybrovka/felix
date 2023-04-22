@@ -268,10 +268,21 @@ class Felix {
 								value = res;
 
 							for (let i = 0; i < arr.length; i++) {
-								value = value[arr[i]];
+								const
+									sub = value[arr[i]];
+
+								if (sub) {
+									value = sub;
+
+								} else {
+									value = undefined;
+									break;
+								}
 							}
 
-							data[key] = value;
+							if (value) {
+								data[key] = value;
+							}
 
 						} else if (config[key] && res[key]) {
 							data[key] = res[key];
