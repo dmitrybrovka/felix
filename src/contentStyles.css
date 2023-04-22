@@ -63,26 +63,26 @@
 
 @media (prefers-color-scheme: dark) {
 	.st-popover {
-		background: #1f1e25;
-		color: #EAE7E7;
-		outline: 1px solid #4f4f4f;
+		background: #1F1E25;
+		color: #D6D6D6;
+		outline: 1px solid #363636;
 	}
 
 	.st-popover-close:before {
-		color: #EAE7E7;
+		color: #D6D6D6;
 	}
 
 	.st-popover-key {
-		color: #EAE7E7;
+		color: #D6D6D6;
 	}
 }
 
 body.gl-dark .st-popover {
-	background: #1f1e25;
-	outline: 1px solid #8F8F8F;
+	background: #1F1E25;
+	outline: 1px solid #363636;
 }
 
 body.gl-dark .st-popover,
 body.gl-dark .st-popover-key {
-	color: #EAE7E7;
+	color: #D6D6D6;
 }
