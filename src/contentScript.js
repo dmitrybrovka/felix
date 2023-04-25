@@ -73,14 +73,12 @@ class Felix {
 		const
 			elName = (name) => `${baseName}-${name}`;
 
-		for (const key in config) {
-			if (config.hasOwnProperty(key)) {
-				const element = document.createElement('div');
-				element.className = elName(key);
+		for (const key of Object.keys(config)) {
+			const element = document.createElement('div');
+			element.className = elName(key);
 
-				content.insertAdjacentElement('beforeend', element);
-				popOver[key] = element;
-			}
+			content.insertAdjacentElement('beforeend', element);
+			popOver[key] = element;
 		}
 
 		const close = document.createElement('div');
@@ -258,35 +256,33 @@ class Felix {
 					config = this.additionalInfoConfig,
 					data = {};
 
-				for (const key in config) {
-					if (config.hasOwnProperty(key)) {
-						if (typeof config[key] === 'string') {
+				for (const key of Object.keys(config)) {
+					if (typeof config[key] === 'string') {
+						const
+							arr = config[key].split('.');
+
+						let
+							value = res;
+
+						for (let i = 0; i < arr.length; i++) {
 							const
-								arr = config[key].split('.');
+								sub = value[arr[i]];
 
-							let
-								value = res;
+							if (sub) {
+								value = sub;
 
-							for (let i = 0; i < arr.length; i++) {
-								const
-									sub = value[arr[i]];
-
-								if (sub) {
-									value = sub;
-
-								} else {
-									value = undefined;
-									break;
-								}
+							} else {
+								value = undefined;
+								break;
 							}
-
-							if (value) {
-								data[key] = value;
-							}
-
-						} else if (config[key] && res[key]) {
-							data[key] = res[key];
 						}
+
+						if (value) {
+							data[key] = value;
+						}
+
+					} else if (config[key] && res[key]) {
+						data[key] = res[key];
 					}
 				}
 
@@ -296,7 +292,7 @@ class Felix {
 	}
 
 	/**
-	 * Debounce input function
+	 * Returns a debounced closure for the specified function
 	 *
 	 * @param fn
 	 * @param ms
@@ -320,7 +316,7 @@ class Felix {
 	}
 
 	/**
-	 * Handles errors
+	 * Handles specified error
 	 * @param err
 	 */
 	catchError(err) {
