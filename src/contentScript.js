@@ -4,6 +4,10 @@ chrome.storage.sync.get(['api', 'token', 'expression', 'url'], (params) => {
 	new Felix(params);
 });
 
+/**
+ * Felix is a class that marks task numbers in text as clickable links and shows additional information about the tasks.
+ * It is designed to work as a Chrome extension and uses the Chrome API.
+ */
 class Felix {
 	constructor(params) {
 		this.api = params.api;
@@ -15,11 +19,13 @@ class Felix {
 		this.defaultLinkClass = 'st-link';
 		this.popOverClass = 'st-popover';
 
+		// Set up observer configuration to detect changes to the DOM
 		this.observerConfig = {
 			childList: true,
 			subtree: true
 		};
 
+		// Set up configuration for additional task information to display in the popover
 		this.additionalInfoConfig = {
 			key: true,
 			summary: true,
@@ -28,6 +34,7 @@ class Felix {
 			status: 'status.display'
 		};
 
+		// Create the popover element and store a reference to it
 		this.popOver = this.createPopOver(this.additionalInfoConfig);
 		this.startDaemon();
 
@@ -37,10 +44,10 @@ class Felix {
 	}
 
 	/**
-	 * Creates expression with necessary groups
+	 * Creates a regular expression with necessary groups based on a given string.
 	 *
-	 * @param str
-	 * @param params
+	 * @param str - the string to use for the regular expression.
+	 * @param [params] - optional parameters to use for the regular expression (default is 'ig').
 	 * @returns {RegExp}
 	 */
 	createExpression(str, params = 'ig') {
@@ -48,9 +55,9 @@ class Felix {
 	}
 
 	/**
-	 * Cooks valid api task name
+	 * Cooks a valid task name to use in a URL.
 	 *
-	 * @param str
+	 * @param str - the task name to create
 	 * @returns {void | string | never}
 	 */
 	cookTaskName(str) {
@@ -58,8 +65,7 @@ class Felix {
 	}
 
 	/**
-	 * Creates popover with additional
-	 * information about marked task
+	 * Creates a popover with additional information about a marked task.
 	 *
 	 * @param config
 	 */

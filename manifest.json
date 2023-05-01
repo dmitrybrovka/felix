@@ -21,9 +21,7 @@
   ],
 
   "permissions": [
-    "activeTab",
     "storage",
-    "webRequest",
     "clipboardRead",
     "<all_urls>"
   ],
